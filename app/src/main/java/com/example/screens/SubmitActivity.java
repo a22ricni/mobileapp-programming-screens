@@ -20,11 +20,8 @@ public class SubmitActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             String name = extras.getString("name");
-            int number = extras.getInt("number");
 
             submitText.setText(name);
-
-            // Do something with the name and number
         }
 
     }

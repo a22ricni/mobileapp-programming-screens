@@ -3,40 +3,56 @@
 
 **Skriv din rapport här!**
 
-_Du kan ta bort all text som finns sedan tidigare_.
-
-## Följande grundsyn gäller dugga-svar:
-
--  kortfattat svar är att föredra. Svar som är längre än en sida text (skärmdumpar och programkod exkluderat) är onödigt långt.
-- Svaret skall ha minst en snutt programkod.
-- Svaret skall inkludera en kort övergripande förklarande text som redogör för vad respektive snutt programkod gör eller som svarar på annan teorifråga.
-- Svaret skall ha minst en skärmdump. Skärmdumpar skall illustrera exekvering av relevant programkod. Eventuell text i skärmdumpar måste vara läsbar.
-- I de fall detta efterfrågas, dela upp delar av ditt svar i för- och nackdelar. Dina för- respektive nackdelar skall vara i form av punktlistor med kortare stycken (3-4 meningar).
-
-Programkod ska se ut som exemplet nedan. Koden måste vara korrekt indenterad då den blir lättare att läsa vilket gör det lättare att hitta syntaktiska fel.
+Jag började med att göra en button view och en edit text view. Efter när dessa två views la tills så
+börjades det med att hämta dessa två views i main activity. Började med att göra en button variabel
+heter submitButton och som hämtar id för view knappen. 
 
 ```
-function errorCallback(error) {
-    switch(error.code) {
-        case error.PERMISSION_DENIED:
-            // Geolocation API stöds inte, gör något
-            break;
-        case error.POSITION_UNAVAILABLE:
-            // Misslyckat positionsanrop, gör något
-            break;
-        case error.UNKNOWN_ERROR:
-            // Okänt fel, gör något
-            break;
+Button submitButton = findViewById(R.id.button);
+```
+
+Efter det gjordes det en setOnClickListener funktion med hjälp av variabeln submitButton. Inne i
+funktionen laddes det först in en varaibel som heter nameEditText som hittar id från activity_main 
+som har en editview som då har id namnet nameEditTextView. Efter det laddes det till intent samt ändrades
+det från "SecondActivity" till "SubmitActivity". Samt ändrades value till variabeln nameEditText.
+Men detta fungerade inte först utan man behövde först lägga till efter variabel namnet ".getText()"
+för att det skulle fungera. Koden under är funktionen setOnClickListener.
+
+```
+submitButton.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onClick(View view) {
+
+        EditText nameEditView = findViewById(R.id.nameEditTextView);
+
+        Intent intent = new Intent(MainActivity.this, SubmitActivity.class);
+        intent.putExtra("name", nameEditView.getText().toString());
+        startActivity(intent);
     }
+});
+```
+
+När detta gjordes börjades det med den andra screen. Det först laddes till en textview som är texten "TextView".
+Därefter gjordes det en variabel som hämtar id från texview och varaibeln heter submitText. Under
+det gjordes det en bundle som då hämtar data från main activity som skickar ut data med intent. 
+Det gjordes en if sats som då kollar om extra inte är null och extra är variabel som har data typen bundle.
+Inne i if satsen finns det en variabel som har datatypen string och som hämtar nyckeln från intent med hjälp
+av variabeln extra. Därefter så används det submitText variabel som ska då hämta värdet från intenten som skickas 
+och skriva det på textView. Men detta först fungerade inte för att värdet som skickas från main activity skickade inte en
+string och då fick man inte något på skärmen. Men när ".toString()" laddes till efter ".getText()" 
+så fungerade det att skicka text och man kan se det som man skickade på den andra screen.
+
+```
+TextView submitText = findViewById(R.id.submitText);
+
+Bundle extras = getIntent().getExtras();
+if (extras != null) {
+    String name = extras.getString("name");
+
+    submitText.setText(name);
 }
 ```
 
-Bilder läggs i samma mapp som markdown-filen.
+![](Screen1.png)
+![](Screen2.png)
 
-![](android.png)
-
-Läs gärna:
-
-- Boulos, M.N.K., Warren, J., Gong, J. & Yue, P. (2010) Web GIS in practice VIII: HTML5 and the canvas element for interactive online mapping. International journal of health geographics 9, 14. Shin, Y. &
-- Wunsche, B.C. (2013) A smartphone-based golf simulation exercise game for supporting arthritis patients. 2013 28th International Conference of Image and Vision Computing New Zealand (IVCNZ), IEEE, pp. 459–464.
-- Wohlin, C., Runeson, P., Höst, M., Ohlsson, M.C., Regnell, B., Wesslén, A. (2012) Experimentation in Software Engineering, Berlin, Heidelberg: Springer Berlin Heidelberg.
