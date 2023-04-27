@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class SubmitActivity extends AppCompatActivity {
 
@@ -12,9 +15,17 @@ public class SubmitActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit);
 
-        Button submitButton = findViewById(R.id.button);
+        TextView submitText = findViewById(R.id.submitText);
 
-        submit
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String name = extras.getString("name");
+            int number = extras.getInt("number");
+
+            submitText.setText(name);
+
+            // Do something with the name and number
+        }
 
     }
 }
